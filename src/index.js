@@ -7,12 +7,13 @@ const fetch = require("node-fetch");
 const app = express();
 
 const logger = require("./log");
-const dbPosts = require("./db/posts");
+const createPost = require("./db/createPost");
+const getPosts = require("./db/getPosts");
 const reddit = require("./reddit");
 
 const wishlist = ["his rope"];
 
-const getPosts = async () => {
+const scanReddit = async () => {
 	try {
 		const subreddit = await reddit.getSubreddit("VinylReleases");
 		const posts = await subreddit.getNew({ limit: 100 });
@@ -47,9 +48,30 @@ const getPosts = async () => {
 		if (!hasDetails) return;
 
 		// Get the existing posts in our Database
-		const existing = dbPosts();
+		const existing = await getPosts();
 
-		logger.log({ message: details, level: "info" });
+		const notRecorded = details.filter((item) => {
+			const link = item.link;
+
+			const match = existing.some((record) => {
+				const matchDatabase = record.link === link;
+				return matchDatabase;
+			});
+
+			return !match;
+		});
+
+		const hasNewPosts = notRecorded && notRecorded.length > 0;
+		if (!hasNewPosts) return;
+
+		notRecorded.forEach(async (record) => {
+			const { title } = record;
+
+			const message = `Creating record in database ${title};`;
+			logger.log({ message, level: "info" });
+
+			await createPost(record);
+		});
 	} catch (error) {
 		console.error(error);
 	}
@@ -60,6 +82,6 @@ app.listen(port, () => {
 	logger.log({ message, level: "info" });
 
 	cron.schedule("*/15 * * * * *", () => {
-		getPosts();
+		scanReddit();
 	});
 });

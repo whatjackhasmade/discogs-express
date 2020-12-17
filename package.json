@@ -18,6 +18,7 @@
 		"node-cron": "^2.0.3",
 		"node-fetch": "^2.6.1",
 		"snoowrap": "^1.21.0",
+		"twilio": "^3.54.1",
 		"url": "^0.11.0",
 		"winston": "^3.3.3"
 	},

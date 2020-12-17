@@ -1,0 +1,38 @@
+require("dotenv").config();
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_AUTH;
+const client = require("twilio")(accountSid, authToken);
+const connect = require("./connect");
+const logger = require("../log");
+
+// The main, exported, function of the endpoint,
+// dealing with the request and subsequent response
+const createPost = async (args) => {
+	let response = "";
+
+	try {
+		const db = await connect();
+
+		// Select the "posts" collection from the database
+		const newItem = await db.collection("posts").insertOne(args);
+
+		const message = await client.messages.create({
+			body: "Click this link https://google.com",
+			from: "+15094040847",
+			to: "+447776812750",
+		});
+
+		const body = message.body;
+
+		logger.log({ message: body, level: "info" });
+
+		response = newItem;
+	} catch (error) {
+		console.error(error);
+		response = error.message;
+	}
+
+	return response;
+};
+
+module.exports = createPost;
