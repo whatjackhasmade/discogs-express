@@ -11,7 +11,9 @@ const createWantlist = async (args) => {
 		const db = await connect();
 
 		// Select the "wantlist" collection from the database
-		const newItem = await db.collection("wantlist").insertOne(args);
+		const newItem = await db
+			.collection("wantlist")
+			.updateOne(args, { $setOnInsert: args }, { upsert: true });
 
 		const message = "Created wantlist item: " + args.title;
 		logger.log({ message, level: "info" });

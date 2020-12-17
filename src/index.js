@@ -34,6 +34,7 @@ const scanReddit = async () => {
 			const title = post.title;
 			const lowerTitle = title.toLowerCase();
 			const match = wishlist.some((item) => {
+				if (!item) return false;
 				const wishlistTitle = item.toLowerCase();
 				const matchWishlist = lowerTitle.includes(wishlistTitle);
 				return matchWishlist;
