@@ -101,3 +101,11 @@ app.listen(port, () => {
 		scanReddit();
 	});
 });
+
+app.get("/", async (req, res) => {
+	// Get the existing posts in our Database
+	const existing = await getPosts();
+	const data = existing;
+
+	res.status(200).json({ data });
+});
