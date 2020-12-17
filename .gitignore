@@ -133,3 +133,4 @@ dist
 
 .env.development
 yarn.lock
+.vercel

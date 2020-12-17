@@ -7,6 +7,7 @@ const fetch = require("node-fetch");
 const app = express();
 
 const logger = require("./log");
+const dbPosts = require("./db/posts");
 const reddit = require("./reddit");
 
 const wishlist = ["his rope"];
@@ -44,6 +45,9 @@ const getPosts = async () => {
 
 		const hasDetails = details.length > 0;
 		if (!hasDetails) return;
+
+		// Get the existing posts in our Database
+		const existing = dbPosts();
 
 		logger.log({ message: details, level: "info" });
 	} catch (error) {

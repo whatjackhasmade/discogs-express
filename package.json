@@ -3,7 +3,10 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"dev": "npx nodemon -e js -- src/index.js"
+		"build": "node ./src/index.js",
+		"d": "npm run develop",
+		"dev": "npm run develop",
+		"develop": "npx nodemon -e js -- src/index.js"
 	},
 	"author": "",
 	"license": "ISC",
@@ -11,9 +14,11 @@
 	"dependencies": {
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
+		"mongodb": "^3.6.3",
 		"node-cron": "^2.0.3",
 		"node-fetch": "^2.6.1",
 		"snoowrap": "^1.21.0",
+		"url": "^0.11.0",
 		"winston": "^3.3.3"
 	},
 	"devDependencies": {
