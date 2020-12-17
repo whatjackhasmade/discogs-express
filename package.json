@@ -7,7 +7,7 @@
 		"d": "npm run develop",
 		"dev": "npm run develop",
 		"develop": "npx nodemon -e js -- src/index.js",
-		"start": "node ./build/index.js"
+		"start": "node ./public/index.js"
 	},
 	"author": "",
 	"license": "ISC",
