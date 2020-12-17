@@ -11,9 +11,25 @@ const createPost = require("./db/createPost");
 const getPosts = require("./db/getPosts");
 const reddit = require("./reddit");
 
-const wishlist = ["his rope"];
-
 const scanReddit = async () => {
+	const watchlist = process.env.WATCHLIST;
+
+	if (!watchlist) {
+		logger({ message: "No watchlist set", level: "error" });
+		return;
+	}
+
+	const wishlist = watchlist.split(",");
+	const hasWishlist = wishlist.length > 0;
+
+	if (!hasWishlist) {
+		logger({
+			message: "Failed wishlist conversion from ENV variable 'WATCHLIST'",
+			level: "error",
+		});
+		return;
+	}
+
 	try {
 		const subreddit = await reddit.getSubreddit("VinylReleases");
 		const posts = await subreddit.getNew({ limit: 100 });
