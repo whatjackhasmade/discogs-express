@@ -94,6 +94,11 @@ const scanReddit = async () => {
 		const hasMatches = matches.length > 0;
 		if (!hasMatches) return;
 
+		logger.log({
+			message: `Matches: ${JSON.stringify(matches, null, 4)}`,
+			level: "error",
+		});
+
 		const details = matches.map(formatMatches);
 
 		const hasDetails = details.length > 0;
