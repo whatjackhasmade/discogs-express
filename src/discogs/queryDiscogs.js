@@ -13,14 +13,22 @@ const queryDiscogs = async () => {
 		const items = wants.map((item) => {
 			const id = item.id;
 			const basic = item.basic_information;
-			const artists = basic.artists;
-			const labels = basic.labels;
+			const artistsObjects = basic.artists;
+			const labelsObjects = basic.labels;
 			const title = basic.title;
 
-			const artistsString = Boolean(artists) && artists.join(", ");
-			const labelsString = Boolean(labels) && labels.join(", ");
+			const hasArtists = artistsObjects && artistsObjects.length > 0;
+			const hasLabels = labelsObjects && labelsObjects.length > 0;
 
-			const object = { id, artists: artistsString, label: labelsString, title };
+			let artists = undefined;
+			let labels = undefined;
+
+			if (hasArtists)
+				artists = artistsObjects.map((artist) => artist.name).join(", ");
+			if (hasLabels)
+				labels = labelsObjects.map((label) => label.name).join(", ");
+
+			const object = { id, artists, labels, title };
 			return object;
 		});
 
