@@ -20,8 +20,8 @@ const queryDiscogs = async () => {
 			const hasArtists = artistsObjects && artistsObjects.length > 0;
 			const hasLabels = labelsObjects && labelsObjects.length > 0;
 
-			let artists = undefined;
-			let labels = undefined;
+			let artists = "";
+			let labels = "";
 
 			if (hasArtists)
 				artists = artistsObjects.map((artist) => artist.name).join(", ");
