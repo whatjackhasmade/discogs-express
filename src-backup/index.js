@@ -27,51 +27,6 @@ const formatMatches = (item) => {
 	return detail;
 };
 
-function hasOnlySpecialCharater(val) {
-	var pattern = /^[^a-zA-Z0-9]+$/;
-	return pattern.test(val);
-}
-
-function isShort(val) {
-	return val.length < 4;
-}
-
-const regexSplit = /(?:,| )+/;
-
-const isMatch = (array, text) => {
-	if (!array) return false;
-	if (!text) return false;
-
-	const lowerText = text.toLowerCase();
-
-	const match = array.some((item) => {
-		if (!item) return false;
-
-		let artists = item.artists.toLowerCase().split(regexSplit);
-		let labels = item.labels.toLowerCase().split(regexSplit);
-		let title = item.title.toLowerCase().split(regexSplit);
-
-		artists = artists.filter((a) => !hasOnlySpecialCharater(a));
-		labels = labels.filter((l) => !hasOnlySpecialCharater(l));
-		title = title.filter((t) => !hasOnlySpecialCharater(t));
-
-		artists = artists.filter((a) => !isShort(a));
-		labels = labels
-			.filter((l) => !isShort(l))
-			.filter((l) => l !== "recordings");
-		title = title.filter((t) => !isShort(t));
-
-		const matchArtists = artists.some((a) => a.includes(lowerText));
-		const matchLabels = labels.some((l) => l.includes(lowerText));
-		const matchTitle = title.some((t) => t.includes(lowerText));
-		const matchWantlist = matchArtists || matchLabels || matchTitle;
-
-		return matchWantlist;
-	});
-
-	return match;
-};
-
 const scanReddit = async () => {
 	const wishlist = await getWantlist();
 	const hasWishlist = wishlist.length > 0;
@@ -173,4 +128,4 @@ app.get("/", async (req, res) => {
 	res.status(200).json({ data });
 });
 
-module.exports = app;
+export default app;

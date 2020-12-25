@@ -22,4 +22,4 @@ const getPosts = async () => {
 	return response;
 };
 
-module.exports = getPosts;
+export default getPosts;

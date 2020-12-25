@@ -1,6 +1,9 @@
 "use strict";
-require("dotenv").config();
-const Snoowrap = require("snoowrap");
+
+import dotenv from "dotenv";
+dotenv.config();
+
+import Snoowrap from "snoowrap";
 
 const credentials = {
 	userAgent: process.env.USER_AGENT,
@@ -14,4 +17,5 @@ const credentials = {
 // For more information on getting credentials, see here: https://github.com/not-an-aardvark/reddit-oauth-helper
 const reddit = new Snoowrap(credentials);
 
-module.exports = reddit;
+export { reddit };
+export default reddit;

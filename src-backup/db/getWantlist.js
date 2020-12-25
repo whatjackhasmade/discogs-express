@@ -22,4 +22,4 @@ const getWantlist = async () => {
 	return response;
 };
 
-module.exports = getWantlist;
+export default getWantlist;

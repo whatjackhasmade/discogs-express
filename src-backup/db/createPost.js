@@ -36,11 +36,11 @@ const createPost = async (args) => {
 
 		response = newItem;
 	} catch (error) {
-		console.error(error);
+		logger.log({ message: error.message, level: "error" });
 		response = error.message;
 	}
 
 	return response;
 };
 
-module.exports = createPost;
+export default createPost;

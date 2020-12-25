@@ -27,4 +27,4 @@ const createWantlist = async (args) => {
 	return response;
 };
 
-module.exports = createWantlist;
+export default createWantlist;

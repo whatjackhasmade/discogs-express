@@ -1,9 +1,10 @@
 // Import Dependencies
-const MongoClient = require("mongodb").MongoClient;
-const url = require("url");
+import { MongoClient } from "mongodb";
+import { Db } from "mongodb";
+import url from "url";
 
 // Create cached connection variable
-let cachedDb = null;
+let cachedDb: Db | null = null;
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -38,4 +39,5 @@ async function connect() {
 	}
 }
 
-module.exports = connect;
+export { connect };
+export default connect;
