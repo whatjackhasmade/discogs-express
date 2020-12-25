@@ -9,7 +9,7 @@ export const isMatch = (array: any[], text: string): boolean => {
 
 	const lowerText = text.toLowerCase();
 
-	array = array[0];
+	array = [array[0], array[1]];
 
 	const match = array.some((item) => {
 		if (!item) return false;
