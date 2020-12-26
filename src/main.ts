@@ -26,9 +26,7 @@ server.on("listening", () => {
 
 	// Run every 15 seconds
 	cron.schedule("*/15 * * * * *", () => {
-		winstonLogger.info("Start Reddit scan");
 		scanReddit();
-		winstonLogger.info("End Reddit scan");
 	});
 
 	// Run every day
