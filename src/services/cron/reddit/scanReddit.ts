@@ -47,9 +47,8 @@ export const scanReddit = async (): Promise<any[]> => {
 		});
 
 		const hasMatches = matches.length > 0;
+		if (!hasMatches) console.log("No matches found");
 		if (!hasMatches) return;
-
-		logger.info(`Matches: ${JSON.stringify(matches, null, 4)}`);
 
 		const details = matches.map(formatMatches);
 
@@ -71,11 +70,14 @@ export const scanReddit = async (): Promise<any[]> => {
 		});
 
 		const hasNewPosts: boolean = notRecorded?.length > 0;
+		if (!hasNewPosts) console.log("No new matches found");
 		if (!hasNewPosts) return;
 
 		notRecorded.forEach(async (record) => {
+			const { link } = record;
 			const { title } = record;
-			logger.info(`Creating record in database ${title}`);
+
+			logger.info(`Matched: ${title} at ${link}`);
 
 			await createPost(record);
 		});

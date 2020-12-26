@@ -1,5 +1,6 @@
 import { hasOnlySpecial } from "./hasOnlySpecial";
 import { isShorterThan } from "./isShorterThan";
+import { removeJoiningWords } from "./removeJoiningWords";
 
 const regexSplit = /(?:,| )+/;
 
@@ -9,32 +10,33 @@ export const isMatch = (array: any[], text: string): boolean => {
 
 	const lowerText = text.toLowerCase();
 
-	array = [array[0], array[1]];
-
 	const match = array.some((item) => {
 		if (!item) return false;
 
-		let artists: string[] = item.artists.toLowerCase().split(regexSplit);
-		let labels: string[] = item.labels.toLowerCase().split(regexSplit);
-		let title: string[] = item.title.toLowerCase().split(regexSplit);
+		const lowerArtists: string = item?.artists?.toLowerCase();
+		const lowerLabels: string = item?.labels?.toLowerCase();
+		const lowerTitle: string = item?.artists?.toLowerCase();
 
-		artists = artists.filter((a) => !hasOnlySpecial(a));
+		let artists: string[] = lowerArtists.split(regexSplit);
+		let labels: string[] = lowerLabels.split(regexSplit);
+		let title: string[] = lowerTitle.split(regexSplit);
+
+		artists = removeJoiningWords(artists);
+		labels = removeJoiningWords(labels);
+		title = removeJoiningWords(title);
+
 		labels = labels.filter((l) => !hasOnlySpecial(l));
 		title = title.filter((t) => !hasOnlySpecial(t));
-
-		artists = artists.filter((a) => !isShorterThan(a, 4));
 
 		labels = labels.filter((l) => !isShorterThan(l, 4));
 		labels = labels.filter((l) => l !== "recordings");
 
 		title = title.filter((t) => !isShorterThan(t, 4));
 
-		console.log(title);
-
-		const matchArtists: boolean = artists.some((a) => a.includes(lowerText));
-		const matchLabels: boolean = labels.some((l) => l.includes(lowerText));
-		const matchTitle: boolean = title.some((t) => t.includes(lowerText));
-		const matchWantlist: boolean = matchArtists || matchLabels || matchTitle;
+		const matchArtists: boolean = artists.some((a) => lowerText.includes(a));
+		const matchLabels: boolean = labels.some((l) => lowerText.includes(l));
+		const matchTitle: boolean = title.some((t) => lowerText.includes(t));
+		const matchWantlist: boolean = matchArtists;
 
 		return matchWantlist;
 	});
