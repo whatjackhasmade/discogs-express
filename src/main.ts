@@ -31,8 +31,6 @@ server.on("listening", () => {
 
 	// Run every day
 	// cron.schedule("* * * */1 * *", () => {
-	// 	winstonLogger.info("Start updateWantlist");
 	// 	updateWantlist();
-	// 	winstonLogger.info("End updateWantlist");
 	// });
 });
