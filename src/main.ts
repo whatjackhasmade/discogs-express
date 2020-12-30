@@ -53,6 +53,6 @@ server.on("listening", () => {
 
 	// Run every day
 	// cron.schedule("* * * */1 * *", () => {
-	// 	updateWantlist();
+	// updateWantlist();
 	// });
 });

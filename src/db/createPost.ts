@@ -25,7 +25,7 @@ const createPost = async (args: any) => {
 
 	const itemWithTimestamp = {
 		...args,
-		updatedAt: new Date().toISOString,
+		updatedAt: new Date().toISOString(),
 	};
 
 	try {
