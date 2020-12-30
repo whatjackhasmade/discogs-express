@@ -47,12 +47,12 @@ server.on("listening", () => {
 	winstonLogger.info(startMessage);
 
 	// Run every 15 seconds
-	cron.schedule("*/15 * * * * *", () => {
-		scanReddit();
+	cron.schedule("*/15 * * * * *", async () => {
+		await scanReddit();
 	});
 
 	// Run every day
-	// cron.schedule("* * * */1 * *", () => {
-	// updateWantlist();
+	// cron.schedule("* * * */1 * *", async () => {
+	// await updateWantlist();
 	// });
 });

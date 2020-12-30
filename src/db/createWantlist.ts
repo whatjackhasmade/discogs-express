@@ -25,6 +25,7 @@ const createWantlist = async (args: any) => {
 
 		const message = "Created wantlist item: " + itemWithTimestamp.title;
 		console.log(message);
+
 		return newItem;
 	} catch (error) {
 		logger.error(error.message);
