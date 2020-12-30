@@ -12,7 +12,7 @@ import winstonLogger from "./startup/logger";
 
 const PORT: number = Number(process.env.PORT) || 5000;
 const env = process.env.NODE_ENV || "dev";
-const startMessage = `${env} server up listening on PORT ${PORT}`;
+const startMessage = `${env} server up listening on http://localhost:${PORT}`;
 
 const server = http.createServer(app);
 
