@@ -41,6 +41,11 @@ app.get("/wantlist", async (req: Request, res: Response) => {
 	res.json({ data });
 });
 
+app.post("/wantlist", async (req: Request, res: Response) => {
+	const data = await updateWantlist();
+	res.json({ data });
+});
+
 server.listen(PORT);
 
 server.on("listening", () => {
