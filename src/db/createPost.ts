@@ -23,13 +23,18 @@ const isProduction = environment === "production";
 const createPost = async (args: any) => {
 	let response: string | InsertOneWriteOpResult<any> = "";
 
+	const itemWithTimestamp = {
+		...args,
+		updatedAt: new Date().toISOString,
+	};
+
 	try {
 		const db = await connect();
 
 		// Select the "posts" collection from the database
-		const newItem = await db.collection("posts").insertOne(args);
+		const newItem = await db.collection("posts").insertOne(itemWithTimestamp);
 
-		const textBody = `${args.title} - ${args.link}`;
+		const textBody = `${itemWithTimestamp.title} - ${itemWithTimestamp.link}`;
 
 		let body = textBody;
 
