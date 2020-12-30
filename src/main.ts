@@ -1,5 +1,6 @@
-import http from "http";
+import cors from "cors";
 import cron from "node-cron";
+import http from "http";
 
 import { Request, Response } from "express";
 
@@ -15,6 +16,15 @@ const env = process.env.NODE_ENV || "dev";
 const startMessage = `${env} server up listening on http://localhost:${PORT}`;
 
 const server = http.createServer(app);
+
+const auth: any[] = [process.env.URL_FRONTEND, process.env.URL_LOCAL];
+
+const corsConfig = {
+	credentials: true,
+	origin: auth,
+};
+
+app.use(cors(corsConfig));
 
 app.get("/", async (req: Request, res: Response) => {
 	const data = await getPosts();
