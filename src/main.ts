@@ -16,8 +16,9 @@ const startMessage = `${env} server up listening on http://localhost:${PORT}`;
 
 const server = http.createServer(app);
 
-app.get("/", (req: Request, res: Response) => {
-	res.json({ greet: "hello" });
+app.get("/", async (req: Request, res: Response) => {
+	const data = await getPosts();
+	res.json({ data });
 });
 
 app.get("/posts", async (req: Request, res: Response) => {
