@@ -25,7 +25,7 @@ const formatMatches = (item: RedditPost) => {
 	return detail;
 };
 
-export const scanReddit = async (): Promise<any[]> => {
+export const scanReddit = async (): Promise<any> => {
 	const wishlist: any[] = await getWantlist();
 	const hasWishlist = wishlist.length > 0;
 

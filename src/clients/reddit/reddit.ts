@@ -5,12 +5,24 @@ dotenv.config();
 
 import Snoowrap from "snoowrap";
 
+const envAgent = process.env.USER_AGENT;
+const envClientID = process.env.CLIENT_ID;
+const envClientSecret = process.env.CLIENT_SECRET;
+const envUsername = process.env.USERNAME;
+const envPassword = process.env.PASSWORD;
+
+const userAgent: string = envAgent ? envAgent : "";
+const clientId: string = envClientID ? envClientID : "";
+const clientSecret: string = envClientSecret ? envClientSecret : "";
+const username: string = envUsername ? envUsername : "";
+const password: string = envPassword ? envPassword : "";
+
 const credentials = {
-	userAgent: process.env.USER_AGENT,
-	clientId: process.env.CLIENT_ID,
-	clientSecret: process.env.CLIENT_SECRET,
-	username: process.env.USERNAME,
-	password: process.env.PASSWORD,
+	userAgent,
+	clientId,
+	clientSecret,
+	username,
+	password,
 };
 
 // Create a new snoowrap requester with OAuth credentials.
