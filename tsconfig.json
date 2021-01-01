@@ -4,15 +4,20 @@
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"target": "es6",
-		"noImplicitAny": true,
+		"noImplicitAny": false,
+		"lib": ["es2018", "dom", "esnext"],
 		"moduleResolution": "node",
 		"sourceMap": true,
-		"outDir": "./dist",
-		"rootDir": "./src",
+		"outDir": "dist",
 		"baseUrl": ".",
+		"strictNullChecks": true,
+		"noImplicitThis": true,
+		"forceConsistentCasingInFileNames": true,
 		"paths": {
-			"*": ["node_modules/*"]
-		}
+			"track": ["./src"]
+		},
+		"typeRoots": ["node_modules/@types", "./types"]
 	},
-	"include": ["src/**/*"]
+	"exclude": ["types", "**/*.test.js", "**/*.test.ts", "generated"],
+	"include": ["./index.d.ts", "src/**/*"]
 }

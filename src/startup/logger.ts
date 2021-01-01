@@ -2,7 +2,7 @@ import winston, { format, transports } from "winston";
 import path from "path";
 
 const { combine, timestamp, prettyPrint } = format;
-const winstonLogger = winston.createLogger({
+const logger = winston.createLogger({
 	format: combine(timestamp(), prettyPrint()),
 	transports: [
 		new transports.Console(),
@@ -11,11 +11,12 @@ const winstonLogger = winston.createLogger({
 	exitOnError: false,
 });
 
-winstonLogger.exceptions.handle(
+logger.exceptions.handle(
 	new transports.File({
 		filename: path.join(__dirname, "../exceptions.log"),
 		level: "error",
 	})
 );
 
-export default winstonLogger;
+export { logger };
+export default logger;

@@ -1,8 +1,8 @@
-import connect from "./connect";
+import { connect } from "track";
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
-const getWantlist = async (): Promise<any[]> => {
+const getWantlist = async (): Promise<any> => {
 	try {
 		const db = await connect();
 

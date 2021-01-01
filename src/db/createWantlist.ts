@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import connect from "./connect";
-import logger from "../startup/logger";
+import { connect } from "track";
+import { logger } from "track";
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
-const createWantlist = async (args: any) => {
+const createWantlist = async (args: any): Promise<any> => {
 	const itemWithTimestamp = {
 		...args,
 		updatedAt: new Date().toISOString(),

@@ -1,13 +1,8 @@
-import { Response, Request, NextFunction } from "express";
-import winston from "winston";
+import { Response, Request } from "express";
+import { logger } from "track";
 
-const error = (
-	err: Error,
-	req: Request,
-	res: Response,
-	next: NextFunction
-): void => {
-	winston.error(`${err.message} `, err);
+const middlewareError = (err: Error, _: Request, res: Response): void => {
+	logger.error(`${err.message} `, err);
 	res.status(500).send(`Err: 500, Someting went Wrong, ${err}`);
 };
-export { error };
+export { middlewareError };

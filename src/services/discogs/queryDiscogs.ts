@@ -1,4 +1,4 @@
-import { discogs } from "../../clients";
+import { discogs } from "track";
 
 const queryDiscogs = async () => {
 	try {

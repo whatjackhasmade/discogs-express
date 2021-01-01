@@ -1,12 +1,12 @@
-import { createPost } from "../../../db";
-import { getWantlist } from "../../../db";
-import { getPosts } from "../../../db";
+import { createPost } from "track";
+import { getWantlist } from "track";
+import { getPosts } from "track";
 
-import logger from "../../../startup/logger";
+import { logger } from "track";
 
-import { reddit } from "../../../clients";
+import { reddit } from "track";
 
-import { isMatch } from "../../../functions";
+import { isMatch } from "track";
 
 declare type RedditPost = {
 	permalink: string;

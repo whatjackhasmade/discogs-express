@@ -1,5 +1,5 @@
-import { createWantlist } from "../../../db";
-import { queryDiscogs } from "../../../services";
+import { createWantlist } from "track";
+import { queryDiscogs } from "track";
 
 export const updateWantlist = async (): Promise<any> => {
 	const apiWantlist: any[] = await queryDiscogs();

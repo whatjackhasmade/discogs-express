@@ -10,7 +10,10 @@
 		"start": "node dist/main.js",
 		"upgrade": "npm-check --update"
 	},
-	"author": "",
+	"_moduleAliases": {
+		"track": "./src"
+	},
+	"author": "Jack Pritchard (@whatjackhasmade)",
 	"license": "ISC",
 	"description": "",
 	"dependencies": {

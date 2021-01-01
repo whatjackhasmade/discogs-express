@@ -1,7 +1,11 @@
 import { Request, NextFunction } from "express";
 
-const async = (handler: any) => {
-	return async (req: Request, res: Response, next: NextFunction) => {
+const middlewareAsync = (handler: any) => {
+	return async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> => {
 		try {
 			await handler(req, res);
 		} catch (ex) {
@@ -10,4 +14,4 @@ const async = (handler: any) => {
 	};
 };
 
-export { async };
+export { middlewareAsync };

@@ -1,6 +1,6 @@
-import { hasOnlySpecial } from "./hasOnlySpecial";
-import { isShorterThan } from "./isShorterThan";
-import { removeJoiningWords } from "./removeJoiningWords";
+import { hasOnlySpecial } from "track";
+import { isShorterThan } from "track";
+import { removeJoiningWords } from "track";
 
 const regexSplit = /(?:,| )+/;
 

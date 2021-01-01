@@ -1,13 +1,11 @@
-import { NextFunction } from "express";
-
 import express from "express";
 
-const logger = (
+const middlewareLogger = (
 	req: express.Request,
 	res: express.Response,
 	next: express.NextFunction
-) => {
+): void => {
 	console.info(`${req.method} : ${req.originalUrl}`);
 	next();
 };
-export { logger };
+export { middlewareLogger };
