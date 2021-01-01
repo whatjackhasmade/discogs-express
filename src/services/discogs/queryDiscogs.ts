@@ -1,41 +1,43 @@
 import { discogs } from "track";
 
-const queryDiscogs = async () => {
-	try {
-		const res = await discogs
-			.user()
-			.wantlist()
-			.getReleases("jack.davies", 0, { page: 1, per_page: 50 });
+declare type DiscogsItem = {
+  artists: string;
+  id: string;
+  labels: string;
+  title: string;
+};
 
-		const wants: any[] = res.wants;
+const queryDiscogs = async (): Promise<DiscogsItem[]> => {
+  try {
+    const res = await discogs.user().wantlist().getReleases("jack.davies", 0, { page: 1, per_page: 50 });
 
-		const items = wants.map((item) => {
-			const id = item.id;
-			const basic = item.basic_information;
-			const artistsObjects: any[] = basic.artists;
-			const labelsObjects: any[] = basic.labels;
-			const title = basic.title;
+    const wants: any[] = res.wants;
 
-			const hasArtists = artistsObjects?.length > 0;
-			const hasLabels = labelsObjects?.length > 0;
+    const items: DiscogsItem[] = wants.map(item => {
+      const id = item.id;
+      const basic = item.basic_information;
+      const artistsObjects: any[] = basic.artists;
+      const labelsObjects: any[] = basic.labels;
+      const title = basic.title;
 
-			let artists = "";
-			let labels = "";
+      const hasArtists = artistsObjects?.length > 0;
+      const hasLabels = labelsObjects?.length > 0;
 
-			if (hasArtists)
-				artists = artistsObjects.map((artist) => artist.name).join(", ");
-			if (hasLabels)
-				labels = labelsObjects.map((label) => label.name).join(", ");
+      let artists = "";
+      let labels = "";
 
-			const object = { id, artists, labels, title };
-			return object;
-		});
+      if (hasArtists) artists = artistsObjects.map(artist => artist.name).join(", ");
+      if (hasLabels) labels = labelsObjects.map(label => label.name).join(", ");
 
-		return items;
-	} catch (err) {
-		console.error(err);
-		return err;
-	}
+      const object: DiscogsItem = { id, artists, labels, title };
+      return object;
+    });
+
+    return items;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
 };
 
 export { queryDiscogs };

@@ -7,12 +7,12 @@ const app: Application = express();
 
 // create a write stream (in append mode)
 // setup the logger
-process.on("uncaughtException", (ex) => {
-	logger.error(ex.message, ex);
+process.on("uncaughtException", ex => {
+  logger.error(ex.message, ex);
 });
 
-process.on("unhandledRejection", (ex) => {
-	throw ex;
+process.on("unhandledRejection", ex => {
+  throw ex;
 });
 
 export { app };

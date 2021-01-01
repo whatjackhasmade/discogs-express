@@ -1,33 +1,29 @@
-import { createPost } from "track";
-import { getWantlist } from "track";
-import { getPosts } from "track";
-
+// Common
+import { connect } from "track";
 import { logger } from "track";
 
-import { reddit } from "track";
+// Database models
+import { PostModel } from "track";
+import { RecordModel } from "track";
 
+// Helpers
 import { isMatch } from "track";
 
-declare type RedditPost = {
-  permalink: string;
-  title: string;
-};
+// Services
+import { latestFromSubreddit } from "track";
 
-const formatMatches = (item: RedditPost) => {
-  const permalink: string = item.permalink;
-  const link: string = "https://reddit.com" + permalink;
-  const title: string = item.title;
+// Type definitions
+import type { IPost } from "track";
+import type { IRecord } from "track";
 
-  const detail = {
-    link,
-    title,
-  };
-  return detail;
-};
+// Local functions
+import { formatMatches } from "./formatMatches";
 
 export const scanReddit = async (): Promise<any> => {
-  const wishlist: any[] = await getWantlist();
-  const hasWishlist = wishlist.length > 0;
+  await connect();
+
+  const wishlist: IRecord[] = await RecordModel.find({});
+  const hasWishlist: boolean = wishlist.length > 0;
 
   if (!hasWishlist) {
     logger.error("No watchlist set");
@@ -35,10 +31,11 @@ export const scanReddit = async (): Promise<any> => {
   }
 
   try {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const subreddit = await reddit.getSubreddit("VinylReleases");
-    const posts: RedditPost[] = await subreddit.getNew({ limit: 100 });
+    const posts = await latestFromSubreddit("VinylReleases");
+    if (!posts) return;
+
+    const hasPosts: boolean = posts.length > 0;
+    if (!hasPosts) return;
 
     const matches = posts.filter(post => {
       const title = post.title;
@@ -46,40 +43,48 @@ export const scanReddit = async (): Promise<any> => {
       return match;
     });
 
-    const hasMatches = matches.length > 0;
+    const hasMatches: boolean = matches.length > 0;
     if (!hasMatches) console.log("No matches found");
     if (!hasMatches) return;
 
     const details = matches.map(formatMatches);
 
-    const hasDetails = details.length > 0;
+    const hasDetails: boolean = details.length > 0;
     if (!hasDetails) return;
 
     // Get the existing posts in our Database
-    const existing = await getPosts();
+    const existing: IPost[] = await PostModel.find({});
+    const hasExisting: boolean = existing.length > 0;
 
-    const notRecorded = details.filter(item => {
-      const link = item.link;
+    let notRecorded = details;
 
-      const match: boolean = existing.some(record => {
-        const matchDatabase: boolean = record.link === link;
-        return matchDatabase;
+    if (hasExisting) {
+      notRecorded = details.filter(item => {
+        const url = item.url;
+
+        const match: boolean = existing.some(record => {
+          const matchDatabase: boolean = record.url === url;
+          return matchDatabase;
+        });
+
+        return !match;
       });
-
-      return !match;
-    });
+    }
 
     const hasNewPosts: boolean = notRecorded?.length > 0;
     if (!hasNewPosts) console.log("🔦 No new matches found");
     if (!hasNewPosts) return;
 
     notRecorded.forEach(async record => {
-      const { link } = record;
+      const { url } = record;
       const { title } = record;
 
-      logger.info(`Matched: ${title} at ${link}`);
+      logger.info(`Matched: ${title} at ${url}`);
 
-      await createPost(record);
+      await PostModel.findOneOrCreate({
+        title,
+        url,
+      });
     });
   } catch (error) {
     console.error(error);

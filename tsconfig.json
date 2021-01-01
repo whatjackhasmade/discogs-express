@@ -19,6 +19,6 @@
     },
     "typeRoots": ["node_modules/@types", "./types"]
   },
-  "exclude": ["types", "**/*.test.js", "**/*.test.ts", "generated"],
+  "exclude": ["node_modules", ".vscode", "types", "**/*.test.js", "**/*.test.ts", "generated"],
   "include": ["./index.d.ts", "src/**/*"]
 }

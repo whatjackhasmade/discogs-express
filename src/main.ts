@@ -1,18 +1,31 @@
+import dotenv from "dotenv";
 import cors from "cors";
 import cron from "node-cron";
 import http from "http";
+dotenv.config();
 
-import { Request, Response } from "express";
-
+// Common
 import { app } from "track";
+import { connect } from "track";
+import { logger } from "track";
+
+// Database models
+import { PostModel } from "track";
+import { RecordModel } from "track";
+
+// Services - Client functions
 import { getAlbumBandcamp } from "track";
 import { getArtistBandcamp } from "track";
-import { getPosts } from "track";
-import { getWantlist } from "track";
+
+// Services - CRON
 import { scanBandcamp } from "track";
 import { scanReddit } from "track";
 import { updateWantlist } from "track";
-import { logger } from "track";
+
+// Type definitions
+import type { Request, Response } from "express";
+import type { IPost } from "track";
+import type { IRecord } from "track";
 
 const PORT: number = Number(process.env.PORT) || 5000;
 const env = process.env.NODE_ENV || "dev";
@@ -27,10 +40,16 @@ const corsConfig = {
   origin: auth,
 };
 
+// Open our connection to MongoDB
+connect();
+
 app.use(cors(corsConfig));
 
 app.get("/", async (req: Request, res: Response) => {
-  const data = await getPosts();
+  await connect();
+
+  const data: IPost[] = await PostModel.find({});
+
   res.json({ data });
 });
 
@@ -68,12 +87,18 @@ app.get("/artist/:bandcampArtistURL", async (req: Request, res: Response) => {
 });
 
 app.get("/posts", async (req: Request, res: Response) => {
-  const data = await getPosts();
+  await connect();
+
+  const data: IPost[] = await PostModel.find({});
+
   res.json({ data });
 });
 
 app.get("/wantlist", async (req: Request, res: Response) => {
-  const data = await getWantlist();
+  await connect();
+
+  const data: IRecord[] = await RecordModel.find({});
+
   res.json({ data });
 });
 

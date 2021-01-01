@@ -1,15 +1,25 @@
-import { getWantlist } from "track";
+// Common
+import { connect } from "track";
 
+// Database models
+import { RecordModel } from "track";
+
+// Services
 import { getArtistBandcamp } from "track";
 import { getAlbumBandcamp } from "track";
 
+// Type definitions
+import type { IRecord } from "track";
+
 export const scanBandcamp = async (): Promise<any> => {
-  const wishlist: any[] = await getWantlist();
+  await connect();
+
+  const wishlist: IRecord[] = await RecordModel.find({});
 
   const hasWishlist: boolean = wishlist.length > 0;
   if (!hasWishlist) return;
 
-  const wishlistBandcampEnabled: any[] = wishlist.filter(item => Boolean(item.bandcamp));
+  const wishlistBandcampEnabled: IRecord[] = wishlist.filter(item => Boolean(item.bandcamp));
 
   const hasWishlistBandcamp: boolean = wishlistBandcampEnabled.length > 0;
   if (!hasWishlistBandcamp) return;
@@ -17,7 +27,8 @@ export const scanBandcamp = async (): Promise<any> => {
   try {
     const artistAlbums: string[][] = await Promise.all(
       wishlistBandcampEnabled.map(async item => {
-        const bandcampURL: string = item.bandcamp;
+        const bandcampURL = item.bandcamp;
+        if (!bandcampURL) return [];
 
         const albums: string[] = await getArtistBandcamp(bandcampURL);
         return albums;
@@ -27,7 +38,7 @@ export const scanBandcamp = async (): Promise<any> => {
     const validAlbums: string[][] = artistAlbums.filter(Boolean);
     const albumLinks: string[] = validAlbums.flat();
 
-    const hasAlbumLinks = albumLinks.length > 0;
+    const hasAlbumLinks: boolean = albumLinks.length > 0;
     if (!hasAlbumLinks) return;
 
     const albums = await Promise.all(
@@ -37,7 +48,7 @@ export const scanBandcamp = async (): Promise<any> => {
       }),
     );
 
-    const hasAlbums = albums.length > 0;
+    const hasAlbums: boolean = albums.length > 0;
     if (!hasAlbums) return;
 
     console.log("Found albums");
