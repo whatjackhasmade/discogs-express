@@ -2,20 +2,26 @@
 	"name": "discogs-express",
 	"version": "1.0.0",
 	"main": "dist/main.js",
-	"scripts": {
-		"build": "tsc -p .",
-		"d": "npm run develop",
-		"dev": "npm run develop",
-		"develop": "nodemon -x ts-node src/main.ts",
-		"start": "node dist/main.js",
-		"upgrade": "npm-check --update"
-	},
-	"_moduleAliases": {
-		"track": "./src"
-	},
 	"author": "Jack Pritchard (@whatjackhasmade)",
 	"license": "ISC",
 	"description": "",
+	"scripts": {
+		"build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist",
+		"d": "npm run develop",
+		"dev": "npm run develop",
+		"develop": "tsc --noEmit && npm run start-dev",
+		"format": "prettier --write \"**/*.{ css,scss,js,jsx,ts,tsx,json,md }\"",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+    "lint-fix": "npm run pretest -- --fix",
+    "postinstall": "npm run build",
+    "precommit": "npm run format && npm run type-check",
+		"start": "node dist/main.js",
+		"start-dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+		"upgrade": "npm-check --update"
+	},
+	  "_moduleAliases": {
+    "track": "./src"
+  },
 	"dependencies": {
 		"@types/cors": "^2.8.9",
 		"body-parser": "^1.19.0",
@@ -51,6 +57,8 @@
 		"npm-check": "^5.9.0",
 		"prettier": "^2.2.1",
 		"ts-node": "^9.1.1",
+		"ts-node-dev": "^1.1.1",
+		"tscpaths": "^0.0.9",
 		"typescript": "^4.1.3"
 	}
 }
