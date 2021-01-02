@@ -1,6 +1,8 @@
 import * as Mongoose from "mongoose";
 
+import { findByDiscogsID } from "./record.statics";
 import { findOneOrCreate } from "./record.statics";
+
 import { setUpdatedAt } from "./record.methods";
 
 export const RecordSchema = new Mongoose.Schema({
@@ -19,6 +21,7 @@ export const RecordSchema = new Mongoose.Schema({
   },
 });
 
+RecordSchema.statics.findByDiscogsID = findByDiscogsID;
 RecordSchema.statics.findOneOrCreate = findOneOrCreate;
 
 RecordSchema.methods.setUpdatedAt = setUpdatedAt;
