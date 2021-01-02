@@ -1,6 +1,10 @@
-import dotenv from "dotenv";
+import bearerToken from "express-bearer-token";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import cron from "node-cron";
+import dotenv from "dotenv";
+import helmet from "helmet";
 import http from "http";
 dotenv.config();
 
@@ -35,6 +39,19 @@ connect();
 
 app.use(cors(corsConfig));
 
+// Set helemet
+app.use(helmet());
+
+// Accept bearer token authentication
+app.use(bearerToken());
+
+// Accept form data in requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Parse cookie sent in requests
+app.use(cookieParser());
+
 // Controllers - Index
 app.get("/", api.getPosts);
 
@@ -49,6 +66,7 @@ app.get("/posts", api.getPosts);
 app.get("/wishlist", api.getWishlist);
 app.get("/wishlist/:discogsID", api.getWishlistSingle);
 app.post("/wishlist", api.postWishlist);
+app.put("/wishlist/:discogsID", api.putWishlistSingle);
 
 server.listen(PORT);
 
