@@ -12,7 +12,7 @@ export const messageSMS = async (body: string): Promise<void> => {
   const to = envTo ? envTo : "";
 
   try {
-    if (isProduction) console.log("Skipping SMS message as in development or staging");
+    if (!isProduction) console.log("Skipping SMS message as in development or staging");
 
     if (isProduction) {
       const textArgs = { body, from, to };
