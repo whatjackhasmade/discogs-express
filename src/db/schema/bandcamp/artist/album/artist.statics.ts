@@ -1,11 +1,15 @@
 import { IArtistDocument, IArtistModel } from "./artist.types";
 
-export async function findOneOrCreate(artistModel: IArtistModel, url: string): Promise<IArtistDocument> {
-  const artist = await artistModel.findOne({ url });
+declare type Args = {
+  url: string;
+};
+
+export async function findOneOrCreate(model: IArtistModel, { url }: Args): Promise<IArtistDocument> {
+  const artist = await model.findOne({ url });
 
   // If we found a artist, return it;
   if (artist) return artist;
 
   // Otherwise, create one
-  return artistModel.create({ url });
+  return await model.create({ url });
 }

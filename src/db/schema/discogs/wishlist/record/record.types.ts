@@ -1,29 +1,22 @@
 import { Document, Model } from "mongoose";
 
-export interface IRecord {
+export interface IRecordRequired {
   artists: string;
-  bandcamp?: string;
   discogsID: string;
   labels: string;
   title: string;
+}
+
+export interface IRecord extends IRecordRequired {
+  bandcamp?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
 export interface IRecordDocument extends IRecord, Document {
-  setUpdatedAt: (this: IRecordDocument) => Promise<void>;
+  setUpdatedAt: (postDocument: IRecordDocument) => Promise<void>;
 }
 
 export interface IRecordModel extends Model<IRecordDocument> {
-  findOneOrCreate: (
-    this: IRecordModel,
-    {
-      artists,
-      bandcamp,
-      discogsID,
-      labels,
-      title,
-    }: { artists: string; bandcamp: string; discogsID: string; labels: string; title: string },
-  ) => Promise<IRecordDocument>;
-  findByAge: (this: IRecordModel, value: string) => Promise<IRecordDocument[]>;
+  findOneOrCreate: (postModel: IRecordModel, args: IRecord) => Promise<IRecordDocument>;
 }

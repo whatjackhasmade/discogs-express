@@ -30,7 +30,7 @@ export const updateWishlist = async (): Promise<void | undefined> => {
 
     logger.info(`Creating wishlist item: ${title}`);
 
-    await RecordModel.findOneOrCreate({
+    await RecordModel.findOneOrCreate(RecordModel, {
       artists,
       bandcamp,
       discogsID: id,

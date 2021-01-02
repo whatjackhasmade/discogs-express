@@ -1,9 +1,5 @@
-import { model } from "mongoose";
+import * as Mongoose from "mongoose";
+import ArtistSchema from "./artist.schema";
+import { IArtistDocument, IArtistModel } from "./artist.types";
 
-import { IArtistDocument } from "./artist.types";
-import { IArtistModel } from "./artist.types";
-
-import { ArtistSchema } from "./artist.schema";
-export { IArtist } from "./artist.schema";
-
-export const ArtistModel = model<IArtistDocument, IArtistModel>("artist", ArtistSchema);
+export const ArtistModel = Mongoose.model<IArtistDocument>("bandcamp", ArtistSchema) as IArtistModel;

@@ -1,10 +1,11 @@
 import * as Mongoose from "mongoose";
-import { findOneOrCreate, findByDiscogsID } from "./record.statics";
+
+import { findOneOrCreate } from "./record.statics";
 import { setUpdatedAt } from "./record.methods";
 
-const RecordSchema = new Mongoose.Schema({
+export const RecordSchema = new Mongoose.Schema({
   artists: String,
-  bandcamp: { type: String, index: { unique: true }, required: false },
+  bandcamp: String,
   discogsID: { type: String, index: { unique: true }, required: false },
   labels: String,
   title: String,
@@ -19,7 +20,6 @@ const RecordSchema = new Mongoose.Schema({
 });
 
 RecordSchema.statics.findOneOrCreate = findOneOrCreate;
-RecordSchema.statics.findByDiscogsID = findByDiscogsID;
 
 RecordSchema.methods.setUpdatedAt = setUpdatedAt;
 

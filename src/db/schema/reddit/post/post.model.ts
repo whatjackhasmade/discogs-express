@@ -1,9 +1,5 @@
-import { model } from "mongoose";
+import * as Mongoose from "mongoose";
+import PostSchema from "./post.schema";
+import { IPostDocument, IPostModel } from "./post.types";
 
-import { IPostDocument } from "./post.types";
-import { IPostModel } from "./post.types";
-
-import { PostSchema } from "./post.schema";
-export { IPost } from "./post.schema";
-
-export const PostModel = model<IPostDocument, IPostModel>("post", PostSchema);
+export const PostModel = Mongoose.model<IPostDocument>("reddit", PostSchema) as IPostModel;

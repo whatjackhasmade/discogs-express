@@ -3,14 +3,9 @@ import { IArtistDocument } from "./artist.types";
 export async function setUpdatedAt(artist: IArtistDocument): Promise<void> {
   const now = new Date().toISOString();
 
-  const hasNoUpdatedAt = !artist?.updatedAt;
+  const shouldUpdate: boolean = !artist?.updatedAt || artist?.updatedAt < now;
+  if (!shouldUpdate) return;
 
-  // @ts-ignore
-  const updatedAtIsOld: boolean = artist?.updatedAt < now;
-  const shouldUpdate = hasNoUpdatedAt || updatedAtIsOld;
-
-  if (shouldUpdate) {
-    artist.updatedAt = now;
-    await artist.save();
-  }
+  artist.updatedAt = now;
+  await artist.save();
 }

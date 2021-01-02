@@ -1,11 +1,18 @@
 import { Document, Model } from "mongoose";
 
-import { IArtist } from "./artist.schema";
+export interface IArtistRequired {
+  url: string;
+}
+
+export interface IArtist extends IArtistRequired {
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 export interface IArtistDocument extends IArtist, Document {
-  setUpdatedAt: (artist: IArtistDocument) => Promise<void>;
+  setUpdatedAt: (postDocument: IArtistDocument) => Promise<void>;
 }
 
 export interface IArtistModel extends Model<IArtistDocument> {
-  findOneOrCreate: (artist: IArtistModel) => Promise<IArtistDocument>;
+  findOneOrCreate: (postModel: IArtistModel, args: IArtist) => Promise<IArtistDocument>;
 }

@@ -1,18 +1,9 @@
-import { Schema } from "mongoose";
+import * as Mongoose from "mongoose";
 
 import { findOneOrCreate } from "./post.statics";
-
 import { setUpdatedAt } from "./post.methods";
 
-export interface IPost {
-  title: string;
-  url: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export const PostSchema = new Schema({
-  title: String,
+export const PostSchema = new Mongoose.Schema({
   url: String,
   createdAt: {
     type: String,
@@ -25,6 +16,7 @@ export const PostSchema = new Schema({
 });
 
 PostSchema.statics.findOneOrCreate = findOneOrCreate;
+
 PostSchema.methods.setUpdatedAt = setUpdatedAt;
 
 export default PostSchema;

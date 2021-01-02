@@ -1,15 +1,30 @@
-import { IPostDocument, IPostModel } from "./post.types";
-
 import { messageSMS } from "track";
 
-export async function findOneOrCreate(postModel: IPostModel, title: string, url: string): Promise<IPostDocument> {
-  const record = await postModel.findOne({ url });
+import { IPostDocument, IPostModel } from "./post.types";
 
-  // If we found a record, return it;
-  if (record) return record;
+declare type Args = {
+  title: string;
+  url: string;
+};
 
-  await messageSMS(`Creating new Reddit post ${title} in DB`);
+export async function findOneOrCreate(model: IPostModel, args: Args): Promise<IPostDocument | undefined> {
+  const { title, url } = args;
+
+  // If no URL provided, we can't search
+  if (!url) return;
+
+  const post = await model.findOne({ url });
+
+  // If we found a post, return it;
+  if (post) return post;
+
+  // If no title provided, we can't create
+  if (!title) return;
 
   // Otherwise, create one
-  return postModel.create({ title, url });
+  const newPost = await model.create(args);
+
+  await messageSMS(`New post: ${title} - ${url}`);
+
+  return newPost;
 }

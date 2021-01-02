@@ -12,7 +12,7 @@ process.on("uncaughtException", ex => {
 });
 
 process.on("unhandledRejection", ex => {
-  throw ex;
+  logger.error("unhandledRejection", ex);
 });
 
 export { app };

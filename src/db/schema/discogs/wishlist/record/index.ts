@@ -1,2 +1,2 @@
 export * from "./record.model";
-export { IRecord } from "./record.types";
+export * from "./record.types";

@@ -58,6 +58,8 @@ export const scanReddit = async (): Promise<any> => {
 
     let notRecorded = details;
 
+    console.log(existing);
+
     if (hasExisting) {
       notRecorded = details.filter(item => {
         const url = item.url;
@@ -79,12 +81,10 @@ export const scanReddit = async (): Promise<any> => {
       const { url } = record;
       const { title } = record;
 
-      logger.info(`Matched: ${title} at ${url}`);
+      const newPost = { title, url };
+      console.log(newPost);
 
-      await PostModel.findOneOrCreate({
-        title,
-        url,
-      });
+      await PostModel.findOneOrCreate(PostModel, newPost);
     });
   } catch (error) {
     console.error(error);

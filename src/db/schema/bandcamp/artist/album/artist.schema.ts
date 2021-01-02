@@ -1,17 +1,10 @@
-import { Schema } from "mongoose";
+import * as Mongoose from "mongoose";
 
 import { findOneOrCreate } from "./artist.statics";
-
 import { setUpdatedAt } from "./artist.methods";
 
-export interface IArtist {
-  url: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export const ArtistSchema = new Schema({
-  url: String,
+export const ArtistSchema = new Mongoose.Schema({
+  url: { type: String, index: { unique: true } },
   createdAt: {
     type: String,
     default: new Date().toISOString(),
@@ -23,6 +16,7 @@ export const ArtistSchema = new Schema({
 });
 
 ArtistSchema.statics.findOneOrCreate = findOneOrCreate;
+
 ArtistSchema.methods.setUpdatedAt = setUpdatedAt;
 
 export default ArtistSchema;
