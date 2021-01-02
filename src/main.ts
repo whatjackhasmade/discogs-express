@@ -42,9 +42,12 @@ app.get("/", api.getPosts);
 app.get("/bandcamp/album/:bandcampAlbumURL", api.getBandcampAlbum);
 app.get("/bandcamp/artist/:bandcampArtistURL", api.getBandcampArtist);
 
+// Controllers - Reddit Posts
 app.get("/posts", api.getPosts);
 
+// Controllers - Discogs Wishlist/Wantlist
 app.get("/wishlist", api.getWishlist);
+app.get("/wishlist/:discogsID", api.getWishlistSingle);
 app.post("/wishlist", api.postWishlist);
 
 server.listen(PORT);

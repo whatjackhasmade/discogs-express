@@ -4,6 +4,7 @@ import { getBandcampAlbum } from "./bandcamp";
 
 // Controllers - Database
 import { getWishlist } from "./database";
+import { getWishlistSingle } from "./database";
 import { postWishlist } from "./database";
 
 // Controllers - Posts
@@ -14,6 +15,7 @@ const api = {
   getBandcampAlbum,
 
   getWishlist,
+  getWishlistSingle,
   postWishlist,
 
   getPosts,

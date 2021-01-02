@@ -18,5 +18,6 @@ export interface IRecordDocument extends IRecord, Document {
 }
 
 export interface IRecordModel extends Model<IRecordDocument> {
+  findByDiscogsID: (postModel: IRecordModel, args: { discogsID: string }) => Promise<IRecordDocument | undefined>;
   findOneOrCreate: (postModel: IRecordModel, args: IRecord) => Promise<IRecordDocument>;
 }
