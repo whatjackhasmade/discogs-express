@@ -33,7 +33,7 @@ export const connect = (): any => {
   });
 
   database.on("error", () => {
-    console.log("Error connecting to database");
+    console.error("Error connecting to database");
   });
 
   return {

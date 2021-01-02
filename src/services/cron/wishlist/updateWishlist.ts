@@ -21,7 +21,6 @@ export const updateWishlist = async (): Promise<void | undefined> => {
   const hasWishlist: boolean = apiWishlist?.length > 0;
 
   if (!hasWishlist) console.log("No wishlist found");
-
   if (!hasWishlist) return;
 
   apiWishlist.forEach(async record => {

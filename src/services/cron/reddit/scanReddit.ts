@@ -58,8 +58,6 @@ export const scanReddit = async (): Promise<any> => {
 
     let notRecorded = details;
 
-    console.log(existing);
-
     if (hasExisting) {
       notRecorded = details.filter(item => {
         const url = item.url;
@@ -77,15 +75,7 @@ export const scanReddit = async (): Promise<any> => {
     if (!hasNewPosts) console.log("🔦 No new matches found");
     if (!hasNewPosts) return;
 
-    notRecorded.forEach(async record => {
-      const { url } = record;
-      const { title } = record;
-
-      const newPost = { title, url };
-      console.log(newPost);
-
-      await PostModel.findOneOrCreate(PostModel, newPost);
-    });
+    notRecorded.forEach(async record => await PostModel.findOneOrCreate(PostModel, record));
   } catch (error) {
     console.error(error);
   }
