@@ -4,6 +4,7 @@ import { findOneOrCreate } from "./post.statics";
 import { setUpdatedAt } from "./post.methods";
 
 export const PostSchema = new Mongoose.Schema({
+  title: String,
   url: String,
   createdAt: {
     type: String,
