@@ -17,7 +17,7 @@ declare type DiscogsItem = {
 export const updateWishlist = async (): Promise<void | undefined> => {
   await connect();
 
-  const apiWishlist: DiscogsItem[] = await queryDiscogs();
+  const apiWishlist: DiscogsItem[] = await queryDiscogs({});
   const hasWishlist: boolean = apiWishlist?.length > 0;
 
   if (!hasWishlist) console.log("No wishlist found");
