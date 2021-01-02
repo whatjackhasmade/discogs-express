@@ -1,4 +1,5 @@
 export * from "./app";
+export * from "./controllers";
 export * from "./clients";
 export * from "./db";
 export * from "./functions";

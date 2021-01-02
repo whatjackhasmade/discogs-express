@@ -15,7 +15,7 @@
     "noImplicitThis": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "track": ["./src"]
+      "track": ["src"]
     },
     "typeRoots": ["node_modules/@types", "./types"]
   },

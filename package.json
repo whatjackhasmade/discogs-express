@@ -7,16 +7,17 @@
 	"description": "",
 	"scripts": {
 		"build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist",
+		"build-run": "run-s build start",
 		"d": "npm run develop",
 		"dev": "npm run develop",
-		"develop": "tsc --noEmit && npm run start-dev",
+		"develop": "npm run start-dev",
 		"format": "prettier --write \"**/*.{ css,scss,js,jsx,ts,tsx,json,md }\"",
 		"lint": "tslint -c tslint.json -p tsconfig.json --fix",
 		"lint-fix": "npm run pretest -- --fix",
 		"postinstall": "npm run build",
-		"precommit": "npm run format && npm run type-check",
+		"precommit": "run-s format type-check",
 		"start": "node dist/main.js",
-		"start-dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+		"start-dev": "nodemon --watch src -x npm run build-run",
 		"upgrade": "npm-check --update"
 	},
 	"_moduleAliases": {
@@ -38,6 +39,7 @@
 		"morgan": "^1.10.0",
 		"node-cron": "^2.0.3",
 		"node-fetch": "^2.6.1",
+		"npm-run-all": "^4.1.5",
 		"snoowrap": "^1.22.0",
 		"twilio": "^3.54.1",
 		"url": "^0.11.0",

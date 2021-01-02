@@ -9,7 +9,7 @@ declare type DiscogsItem = {
 
 const queryDiscogs = async (): Promise<DiscogsItem[]> => {
   try {
-    const res = await discogs.user().wantlist().getReleases("jack.davies", 0, { page: 1, per_page: 50 });
+    const res = await discogs.user().wishlist().getReleases("jack.davies", 0, { page: 1, per_page: 50 });
 
     const wants: any[] = res.wants;
 

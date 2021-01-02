@@ -26,7 +26,7 @@ export const scanReddit = async (): Promise<any> => {
   const hasWishlist: boolean = wishlist.length > 0;
 
   if (!hasWishlist) {
-    logger.error("No watchlist set");
+    logger.error("No wishlist set");
     return;
   }
 

@@ -14,21 +14,21 @@ declare type DiscogsItem = {
   title: string;
 };
 
-export const updateWantlist = async (): Promise<void | undefined> => {
+export const updateWishlist = async (): Promise<void | undefined> => {
   await connect();
 
-  const apiWantlist: DiscogsItem[] = await queryDiscogs();
-  const hasWantlist: boolean = apiWantlist?.length > 0;
+  const apiWishlist: DiscogsItem[] = await queryDiscogs();
+  const hasWishlist: boolean = apiWishlist?.length > 0;
 
-  if (!hasWantlist) console.log("No wantlist found");
+  if (!hasWishlist) console.log("No wishlist found");
 
-  if (!hasWantlist) return;
+  if (!hasWishlist) return;
 
-  apiWantlist.forEach(async record => {
+  apiWishlist.forEach(async record => {
     const { artists, id, labels, title } = record;
     const bandcamp = "";
 
-    logger.info(`Creating wantlist item: ${title}`);
+    logger.info(`Creating wishlist item: ${title}`);
 
     await RecordModel.findOneOrCreate({
       artists,
@@ -40,4 +40,4 @@ export const updateWantlist = async (): Promise<void | undefined> => {
   });
 };
 
-export default updateWantlist;
+export default updateWishlist;
