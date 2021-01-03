@@ -1,2 +1,2 @@
-export * from "./artist.model";
-export * from "./artist.types";
+export * from "./album.model";
+export * from "./album.types";

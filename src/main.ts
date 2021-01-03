@@ -56,6 +56,7 @@ app.use(cookieParser());
 app.get("/", api.getPosts);
 
 // Controllers - Bandcamp
+app.get("/bandcamp/:discogsID", api.getBandcampSingle);
 app.get("/bandcamp/album/:bandcampAlbumURL", api.getBandcampAlbum);
 app.get("/bandcamp/artist/:bandcampArtistURL", api.getBandcampArtist);
 

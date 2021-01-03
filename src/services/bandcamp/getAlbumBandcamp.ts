@@ -10,9 +10,7 @@ const getAlbumBandcamp = async (albumURL: string): Promise<any> => {
         resolve(albumProducts);
       });
     });
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export { getAlbumBandcamp };
