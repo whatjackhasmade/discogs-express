@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 // Import Schemas
-import { ArtistModel } from "track";
+import { AlbumModel } from "track";
 import { PostModel } from "track";
 import { RecordModel } from "track";
 
@@ -37,7 +37,7 @@ export const connect = (): any => {
   });
 
   return {
-    ArtistModel,
+    AlbumModel,
     PostModel,
     RecordModel,
   };
