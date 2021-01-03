@@ -25,34 +25,40 @@ export const scanBandcamp = async (): Promise<any> => {
   if (!hasWishlistBandcamp) return;
 
   try {
-    const artistAlbums: string[][] = await Promise.all(
+    const artistAlbums = await Promise.all(
       wishlistBandcampEnabled.map(async item => {
-        const bandcampURL = item.bandcamp;
-        if (!bandcampURL) return [];
+        const { bandcamp, discogsID } = item;
+        if (!bandcamp || !discogsID) return [];
 
-        const albums: string[] = await getArtistBandcamp(bandcampURL);
-        return albums;
+        const albums: string[] = await getArtistBandcamp(bandcamp);
+        const hasAlbums: boolean = albums?.length > 0;
+        if (!hasAlbums) return [];
+
+        const data = { discogsID, albums };
+        return data;
       }),
     );
 
-    const validAlbums: string[][] = artistAlbums.filter(Boolean);
-    const albumLinks: string[] = validAlbums.flat();
+    console.log(artistAlbums);
 
-    const hasAlbumLinks: boolean = albumLinks.length > 0;
-    if (!hasAlbumLinks) return;
+    // const validAlbums: string[][] = artistAlbums.filter(Boolean);
+    // const albumLinks: string[] = validAlbums.flat();
 
-    const albums = await Promise.all(
-      albumLinks.map(async link => {
-        const album = await getAlbumBandcamp(link);
-        return album;
-      }),
-    );
+    // const hasAlbumLinks: boolean = albumLinks.length > 0;
+    // if (!hasAlbumLinks) return;
 
-    const hasAlbums: boolean = albums.length > 0;
-    if (!hasAlbums) return;
+    // const albums = await Promise.all(
+    //   albumLinks.map(async link => {
+    //     const album = await getAlbumBandcamp(link);
+    //     return album;
+    //   }),
+    // );
 
-    console.log("Found albums");
-    console.log(albums);
+    // const hasAlbums: boolean = albums.length > 0;
+    // if (!hasAlbums) return;
+
+    // console.log("Found albums");
+    // console.log(albums);
   } catch (error) {
     console.error(error);
   }

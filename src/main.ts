@@ -80,7 +80,7 @@ server.on("listening", () => {
 
   // Run every minute
   cron.schedule("*/1 * * * *", async () => {
-    // await scanBandcamp();
+    await scanBandcamp();
   });
 
   // Run every day
