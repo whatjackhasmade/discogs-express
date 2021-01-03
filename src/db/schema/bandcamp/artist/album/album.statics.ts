@@ -1,5 +1,7 @@
 import { IAlbumDocument, IAlbumModel } from "./album.types";
 
+import { messageSMS } from "track";
+
 declare type Args = {
   discogsID: string;
   url: string;
@@ -15,6 +17,8 @@ export async function findOneOrCreate(model: IAlbumModel, args: Args): Promise<I
   if (album) return album;
 
   console.log(`Created a new artist album from bandcamp: ${url}`);
+
+  await messageSMS(`New album from bandcamp: ${url}`);
 
   // Otherwise, create one
   return await model.create({ discogsID, url });
