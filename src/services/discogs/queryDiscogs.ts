@@ -1,4 +1,5 @@
 import { discogs } from "track";
+import sw from "stopword";
 
 declare type DiscogsItem = {
   artists: string;
@@ -73,7 +74,7 @@ const queryDiscogs = async ({ page = 1, per_page = 50, username = "jack.davies" 
       const basic = item.basic_information;
       const artistsObjects = basic.artists;
       const labelsObjects = basic.labels;
-      const title = basic.title;
+      const title = sw.removeStopwords([basic.title]);
 
       const hasArtists: boolean = artistsObjects?.length > 0;
       const hasLabels: boolean = labelsObjects?.length > 0;
@@ -81,8 +82,8 @@ const queryDiscogs = async ({ page = 1, per_page = 50, username = "jack.davies" 
       let artists = "";
       let labels = "";
 
-      if (hasArtists) artists = artistsObjects.map(artist => artist.name).join(", ");
-      if (hasLabels) labels = labelsObjects.map(label => label.name).join(", ");
+      if (hasArtists) artists = sw.removeStopwords(artistsObjects.map(artist => artist.name)).join(", ");
+      if (hasLabels) labels = sw.removeStopwords(labelsObjects.map(label => label.name)).join(", ");
 
       const object: DiscogsItem = { id, artists, labels, title };
       return object;

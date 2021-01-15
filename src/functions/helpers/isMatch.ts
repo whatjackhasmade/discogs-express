@@ -4,6 +4,8 @@ import { removeJoiningWords } from "track";
 
 const regexSplit = /(?:,| )+/;
 
+// TODO: Return the matched text
+
 export const isMatch = (array: any[], text: string): boolean => {
   if (!array) return false;
   if (!text) return false;
